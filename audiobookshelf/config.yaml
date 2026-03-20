@@ -1,5 +1,5 @@
 name: Audiobookshelf
-version: "1.0.2"
+version: "1.0.3"
 slug: audiobookshelf
 description: Audiobookshelf server for Home Assistant
 arch:
@@ -9,6 +9,7 @@ startup: services
 boot: auto
 init: false
 ingress: true
+ingress_port: 80
 panel_icon: mdi:book-open-variant
 map:
   - media:rw

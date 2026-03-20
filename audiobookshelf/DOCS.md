@@ -1,17 +1,12 @@
 # Audiobookshelf Add-on
 
-## Version 1.0.2
+## Version 1.0.4
 
-This release removes the custom `run.sh` wrapper and allows the upstream Audiobookshelf container to start normally.
-
-## Configuration
-
-```yaml
-port: 13378
-```
+This release removes Home Assistant ingress and uses a standard exposed web port instead.
 
 ## Notes
 
-- `init: false` is required because the upstream image already includes its own init system.
+- The add-on exposes container port 80 on host port 13378.
+- `init: false` is kept for compatibility with the upstream s6-based container.
 - `media` and `share` are mapped into the add-on.
 - If you publish this repo to GitHub, update the root `repository.yaml` URL first.

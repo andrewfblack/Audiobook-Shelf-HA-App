@@ -1,5 +1,5 @@
 name: Audiobookshelf
-version: "1.0.0"
+version: "1.0.1"
 slug: audiobookshelf
 description: Audiobookshelf server for Home Assistant
 arch:

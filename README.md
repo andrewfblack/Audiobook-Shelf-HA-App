@@ -2,54 +2,30 @@
 
 This repository provides a Home Assistant add-on for running **Audiobookshelf** inside Home Assistant.
 
-## 📦 Installation
+## Installation
 
 1. Go to **Home Assistant → Settings → Add-ons → Add-on Store**
-2. Click the **⋮ (three dots)** in the top right
+2. Click the **three-dot menu** in the top right
 3. Click **Repositories**
-4. Add this repository URL:
-
-   ```
-   https://github.com/YOUR_USERNAME/audiobookshelf-ha
-   ```
-
+4. Add your GitHub repository URL:
+   `https://github.com/YOUR_USERNAME/audiobookshelf-ha`
 5. Click **Add**
 6. Find **Audiobookshelf** in the add-on store and install it
 
-## 🚀 Features
+## Notes
 
-- Runs Audiobookshelf inside Home Assistant
-- Uses Home Assistant ingress (no port needed)
-- Persistent storage for config and metadata
-- Access media from `/media` and `/share`
+- Version 1.0.4 removes Home Assistant ingress.
+- The add-on now uses a normal exposed Web UI port instead.
+- `init: false` remains enabled because the upstream image already uses its own init system.
+- Update `repository.yaml` and this README with your real GitHub URL before publishing.
 
-## ⚙️ Configuration
+## Web UI
 
-Example config:
+After install, access Audiobookshelf through the Home Assistant add-on page using the Web UI button or directly on the published port.
 
-```yaml
-port: 13378
-log_level: info
-```
+## Media folders
 
-## 📁 Media Setup
-
-Place your files here:
-
+You can place media inside Home Assistant's mapped folders, such as:
 - `/media/audiobooks`
 - `/media/podcasts`
 - `/media/books`
-
-## ⚠️ Notes
-
-- First startup may take a bit
-- This is an early version — feedback welcome!
-
-## 🛠️ Future Improvements
-
-- Better UI config options
-- Backup/restore tools
-- Multi-library presets
-
----
-Built for G&B Homeschool + GBMC ecosystem 🚀

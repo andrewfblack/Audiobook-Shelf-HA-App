@@ -1,31 +1,22 @@
 ARG BUILD_FROM
+FROM node:20-alpine AS build
+ARG ABS_VERSION=2.33.1
+RUN apk add --no-cache git python3 make g++ ffmpeg bash
+WORKDIR /src
+RUN git clone --depth 1 --branch "v${ABS_VERSION}" https://github.com/advplyr/audiobookshelf.git .
+RUN npm install \
+    && cd client \
+    && npm install \
+    && npm run generate
+
 FROM ${BUILD_FROM}
-
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-ARG BUILD_ARCH
-ARG ABS_VERSION=2.27.2
-
 RUN apk add --no-cache \
     bash \
-    ca-certificates \
-    curl \
     ffmpeg \
-    tar \
-    xz
-
+    nodejs \
+    npm
 WORKDIR /app
-
-RUN case "${BUILD_ARCH}" in \
-      aarch64) ABS_ARCH="arm64" ;; \
-      amd64) ABS_ARCH="x64" ;; \
-      *) echo "Unsupported BUILD_ARCH: ${BUILD_ARCH}"; exit 1 ;; \
-    esac \
-    && curl -L "https://github.com/advplyr/audiobookshelf/releases/download/v${ABS_VERSION}/audiobookshelf-linux-${ABS_ARCH}.tar.gz" -o /tmp/audiobookshelf.tar.gz \
-    && tar -xzf /tmp/audiobookshelf.tar.gz -C /app --strip-components=1 \
-    && rm -f /tmp/audiobookshelf.tar.gz
-
+COPY --from=build /src /app
 COPY run.sh /run.sh
 RUN chmod a+x /run.sh
-
 CMD [ "/run.sh" ]

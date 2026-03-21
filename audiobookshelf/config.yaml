@@ -1,5 +1,5 @@
 name: Audiobookshelf
-version: "1.0.8"
+version: "1.0.9"
 slug: audiobookshelf
 description: Audiobookshelf server for Home Assistant
 url: https://www.audiobookshelf.org/
@@ -13,13 +13,13 @@ init: false
 panel_icon: mdi:book-open-variant
 panel_title: Audiobookshelf
 
-webui: "http://[HOST]:[PORT:80]"
-watchdog: "tcp://[HOST]:[PORT:80]"
+webui: "http://[HOST]:[PORT:13378]"
+watchdog: "tcp://[HOST]:[PORT:13378]"
 
 ports:
-  80/tcp: 13378
+  13378/tcp: 13378
 ports_description:
-  80/tcp: Web interface
+  13378/tcp: Web interface
 
 map:
   - type: media
@@ -29,7 +29,7 @@ map:
 
 environment:
   HOST: 0.0.0.0
-  PORT: "80"
+  PORT: "13378"
   CONFIG_PATH: /data/config
   METADATA_PATH: /data/metadata
   BACKUP_PATH: /data/metadata/backups

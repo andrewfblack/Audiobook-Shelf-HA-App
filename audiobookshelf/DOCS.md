@@ -1,19 +1,21 @@
 # Audiobookshelf Add-on
 
-## Version 1.0.6
+## Version 1.0.7
 
-This release uses **Home Assistant ingress** instead of a direct exposed web port.
+This release adds an internal nginx reverse proxy for Home Assistant ingress.
 
-### Ingress settings
+### How it works
 
-- `ingress: true`
-- `ingress_port: 80`
-- `ingress_entry: /audiobookshelf`
-- `ingress_stream: true`
+- Audiobookshelf runs on `127.0.0.1:80`
+- nginx runs on `0.0.0.0:8099`
+- Home Assistant ingress connects to port `8099`
+- nginx redirects `/` to `/audiobookshelf/`
+- nginx proxies `/audiobookshelf/` to Audiobookshelf
+- WebSocket upgrade headers are passed through
 
 ### Runtime environment
 
-- `HOST=0.0.0.0`
+- `HOST=127.0.0.1`
 - `PORT=80`
 - `CONFIG_PATH=/data/config`
 - `METADATA_PATH=/data/metadata`
@@ -21,6 +23,4 @@ This release uses **Home Assistant ingress** instead of a direct exposed web por
 
 ### Notes
 
-- `init: false` is used because the upstream container already uses `s6-overlay`.
-- This version is designed specifically around Audiobookshelf's fixed `/audiobookshelf` subfolder support.
-- If ingress still fails, the next likely step is adding a tiny internal reverse-proxy layer in front of Audiobookshelf.
+This is the first ingress-proxy build. If it still does not load, the next thing to inspect is whether Audiobookshelf returns redirects or asset URLs that still conflict with Home Assistant's dynamic ingress base path.

@@ -1,12 +1,26 @@
 # Audiobookshelf Add-on
 
-## Version 1.0.4
+## Version 1.0.6
 
-This release removes Home Assistant ingress and uses a standard exposed web port instead.
+This release uses **Home Assistant ingress** instead of a direct exposed web port.
 
-## Notes
+### Ingress settings
 
-- The add-on exposes container port 80 on host port 13378.
-- `init: false` is kept for compatibility with the upstream s6-based container.
-- `media` and `share` are mapped into the add-on.
-- If you publish this repo to GitHub, update the root `repository.yaml` URL first.
+- `ingress: true`
+- `ingress_port: 80`
+- `ingress_entry: /audiobookshelf`
+- `ingress_stream: true`
+
+### Runtime environment
+
+- `HOST=0.0.0.0`
+- `PORT=80`
+- `CONFIG_PATH=/data/config`
+- `METADATA_PATH=/data/metadata`
+- `BACKUP_PATH=/data/metadata/backups`
+
+### Notes
+
+- `init: false` is used because the upstream container already uses `s6-overlay`.
+- This version is designed specifically around Audiobookshelf's fixed `/audiobookshelf` subfolder support.
+- If ingress still fails, the next likely step is adding a tiny internal reverse-proxy layer in front of Audiobookshelf.

@@ -1,32 +1,30 @@
-name: Audiobookshelf
-version: "1.1.0"
-slug: audiobookshelf
-
-description: Audiobookshelf server for Home Assistant
-url: https://www.audiobookshelf.org/
+name: "Audiobookshelf"
+version: "1.1.1"
+slug: "audiobookshelf"
+description: "Audiobookshelf server for Home Assistant"
+url: "https://www.audiobookshelf.org/"
 arch:
-  - amd64
   - aarch64
-
+init: false
 startup: application
 boot: auto
-init: false
-
-panel_icon: mdi:book-open-variant
-panel_title: Audiobookshelf
-
-webui: "http://[HOST]:[PORT:13378]"
-watchdog: "tcp://[HOST]:[PORT:13378]"
-
+ingress: false
+panel_icon: mdi:book-play
 ports:
   13378/tcp: 13378
 ports_description:
-  13378/tcp: Web interface
-
+  13378/tcp: "Audiobookshelf web interface"
 map:
-  - type: media
-    read_only: false
-  - type: share
-    read_only: false
-
-schema: false
+  - share:rw
+  - media:rw
+  - addon_config:rw
+options: {}
+schema: {}
+environment:
+  PORT: "13378"
+  CONFIG_PATH: "/data/config"
+  METADATA_PATH: "/data/metadata"
+  BACKUP_PATH: "/data/metadata/backups"
+  SOURCE: "hass-addon"
+webui: "http://[HOST]:[PORT:13378]"
+watchdog: "tcp://[HOST]:[PORT:13378]"
